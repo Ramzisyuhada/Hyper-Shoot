@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
     private void Shoot()
     {
         bool IsShoot = Input.GetMouseButtonDown(0);
-        if (IsShoot)
+        if (IsShoot && GameObject.Find("Bullet") == null)
         {
             Debug.Log("Nembak");
 
@@ -49,7 +49,6 @@ public class InputManager : MonoBehaviour
         float yaw = Input.GetAxis("Mouse Y");
         if (pitch != 0 || yaw != 0) 
         {
-            Debug.Log($"{pitch} {yaw}");
             MovementAction?.Invoke(new Vector2(pitch, yaw));
         }
 

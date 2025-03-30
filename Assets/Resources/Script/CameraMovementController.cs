@@ -26,8 +26,18 @@ public class CameraMovementController : MonoBehaviour
     [Header("Animator")]
     private Animator gun_anim;
     private bool IsScope;
+
+
+    [Header("Bullet")]
+    [SerializeField] GameObject SpawnBullet;
+
+    [Header("Audio")]
+    [SerializeField] PlayerAudioManager AudioManager;
+
     void Start()
     {
+        Cursor.visible = false;
+        Screen.lockCursor = true;
         yaw = Camera.main.transform.eulerAngles.x;
         pitch = transform.eulerAngles.y;
         auxSpeed = speed;
@@ -39,22 +49,36 @@ public class CameraMovementController : MonoBehaviour
         _Input.MovementAction += Movement;
 
     }
+    private void Update()
+    {
+        Debug.DrawRay(SpawnBullet.transform.position, transform.forward * 100000, Color.red);
 
+    }
     private void Shoot()
     {
+        AudioManager.PlayShoot();
+        GameObject go = Instantiate(Resources.Load("Prefab/Bullet/Bullet"),SpawnBullet.transform.position,Quaternion.identity) as GameObject;
+        go.name = "Bullet";
 
+        go.transform.rotation = SpawnBullet.transform.rotation;
     }
 
     void Scope()
     {
+
         IsScope = !IsScope;
         if (IsScope)
         {
             gun_anim.SetBool("Scope", true);
-
+            speed = speed / 7;
+            speedH = speedH / 13;
+            speedV = speedV / 13;
         }
         else
         {
+            speed = auxSpeed;
+            speedH = auxSpeedH;
+            speedV = auxSpeedV;
             gun_anim.SetBool("Scope", false);
 
         }

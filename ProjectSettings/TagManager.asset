@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Body
+  - Neck
+  - Head
+  - Radius
+  - Limit
+  - Pelvis
   layers:
   - Default
   - TransparentFX
